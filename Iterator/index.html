@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+</head>
+<body erke-hide>
+</body>
+<script>
+	class Book {
+		constructor(name){
+			this.name = name;
+		}
+		getName (){
+			return this.name;
+		}
+	}
+	
+	class BookShelf {
+		constructor(){
+			this.Books = [];
+		}
+		appendBook (book){
+			this.Books.push(book)
+		}
+		getBookAt (index){
+			return this.Books[index];
+		}
+		getLength (){
+			return this.Books.length;
+		}
+		Iterator (){
+			let interator = new BookShelfIterator(this);
+			return interator;
+		}
+	}
+	
+	class BookShelfIterator {
+		constructor(BookShelf){
+			this.BookShelf = BookShelf;
+			this.index = 0;
+		}
+		hasNext (){
+			if(this.index < this.BookShelf.getLength()){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		Next (){
+			var book = this.BookShelf.getBookAt(this.index);
+			this.index++;
+			return book;
+		}
+	}
+	
+	var myShelf = new BookShelf();
+	console.log(myShelf);
+	myShelf.appendBook(new Book('语文'));
+	myShelf.appendBook(new Book('数学'));
+	myShelf.appendBook(new Book('英语'));
+	console.log(myShelf);
+	var it = myShelf.Iterator();
+	console.log(myShelf.getLength());
+	console.log(it.hasNext());
+	while(it.hasNext()){
+		var book = it.Next();
+		console.log(book);
+	}
+</script>
+</html>

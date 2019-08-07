@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+</head>
+<body erke-hide>
+</body>
+<script>   
+	class AbstractDisplay {
+		constructor(ch){
+			this.ch = ch;
+		}
+		display (){
+			this.open();
+			for(var i =0;i<5;i++){
+				this.print();
+			}
+			this.close();
+		}
+	}
+	
+	class CharDisplay extends AbstractDisplay {
+		constructor(ch){
+			super(ch);
+		}
+		open (){
+			console.log("<<");
+		}
+		print (){
+			console.log(this.ch);
+		}
+		close (){
+			console.log(">>");
+		}
+	}
+	
+	class StringDisplay extends AbstractDisplay {
+		constructor(ch){
+			super(ch);
+		}
+		printLine (){
+			let len = this.ch.gblen();
+			let str = '+';
+			for(var i=0;i<len;i++){
+				str += '-';
+			}
+			str += '+';
+			console.log(str);
+		}
+		open (){
+			this.printLine();
+		}
+		print (){
+			console.log("|"+this.ch+"|");
+		}
+		close (){
+			this.printLine();
+		}
+	}
+
+	String.prototype.gblen = function() {  
+	    var len = 0;  
+	    for (var i=0; i<this.length; i++) {  
+	        if (this.charCodeAt(i)>127 || this.charCodeAt(i)==94) {  
+	             len += 2;  
+	         } else {  
+	             len ++;  
+	         }  
+	     }  
+	    return len;  
+	}
+	
+	var charObj = new CharDisplay('H');
+	charObj.display();
+	
+	var strObj = new StringDisplay('Good bye this world');
+	strObj.display();
+</script>
+</html>
