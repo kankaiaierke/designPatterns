@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+</head>
+<body erke-hide>
+</body>
+<script>
+	class Product {
+		constructor(owner){
+			this.owner = owner
+		}
+	}
+	class Factory {
+		constructor(){
+			this.owners = []
+		}
+		create(owner){
+			let p = this.createProduct(owner);
+			this.registerProduct(p);
+			return p;
+		}
+	}
+	class IDCard extends Product {
+		constructor(owner){
+			super(owner);
+			console.log("制作"+this.owner+"的ID卡。");
+		}
+		use () {
+			console.log("使用"+this.owner+"的ID卡。");
+		}
+	}
+	class IDCardFactory extends Factory {
+		createProduct (owner) {
+			return new IDCard(owner);
+		}
+		registerProduct (product) {
+			this.owners.push(product);
+		}
+		getOwners () {
+			return this.owners;
+		}
+	}
+	
+	let factory = new IDCardFactory();
+	let sb = factory.create('sb');
+	sb.use();
+</script>
+</html>
