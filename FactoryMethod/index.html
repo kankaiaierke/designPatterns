@@ -47,8 +47,9 @@
 	}
 	
 	let factory = new IDCardFactory();
-	let sb = factory.create('sb');
-	sb.use();
+	let id1 = factory.create('id1');
+	let id2 = factory.create('id2');
+	id2.use();
 	console.log(factory.getOwners());
 </script>
 </html>
