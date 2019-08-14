@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+
+</head>
+
+<body>
+
+<script type="text/javascript">
+	//废代码
+	/*class Heap {
+		//初始化堆
+		constructor(value){
+			if(value){
+				//参数为数组导入数组
+				if(Array.isArray(value)){
+					this.head = null;
+					this.importArray(value);
+				}else{
+					//参数为数组赋值数值
+					this.head = {
+						value,
+						left:null,
+						right:null
+					}
+				}
+			}else{
+				//无参数建立一个空树
+				this.head = null;
+			}
+		}
+		//插入一个数字
+		push(value){
+			if(this.head){
+				this.span((node)=>{
+					if(!node.left){
+						node.left = {
+							value,
+							left:null,
+							right:null
+						}
+						return true;
+					}
+					if(!node.right){
+						node.right = {
+							value,
+							left:null,
+							right:null
+						}
+						return true;
+					}
+					return false;
+				});
+			}else{
+				this.head = {
+					value,
+					left:null,
+					right:null
+				}
+			}
+			this.len++;
+			this.check();
+		}
+		//广度遍历
+		span(func){
+			let queue = [];
+			if(this.head){
+				queue.push(this.head);
+				while(queue.length>0){
+					let node = queue.shift();
+					if(func(node)){
+						break;
+					};
+					if(node.left){
+						queue.push(node.left);
+					}
+					if(node.right){
+						queue.push(node.right);
+					}
+				}
+			}
+		}
+		//检查堆是否满足条件
+		check(){
+			this.span((node)=>{
+				if(node.left && node.left.value < node.value){
+					let medium = node.value;
+					node.value = node.left.value;
+					node.left.value = medium;
+				}
+				if(node.right && node.right.value < node.value){
+					let medium = node.value;
+					node.value = node.right.value;
+					node.right.value = medium;
+				}
+				return false;
+			});
+		}
+		//打印树
+		printTree(){
+			let array = [];
+			this.span((node)=>{
+				array.push(node.value);
+			})
+			console.log(array.join(','));
+		}
+		//获取堆的最小值
+		getMin(){
+			return this.head.value;
+		}
+		//去掉顶部的值
+		removeMin(){
+			let value = this.head.value;
+			let left = this.head.left;
+			let right = this.head.right;
+			let head = null;
+			this.span((node)=>{
+				head = node;
+				return false;
+			});
+			if(head.value){
+				this.head = {
+					value:head.value,
+					left,
+					right,
+				};
+				head = null;
+			}
+			this.check();
+		}
+		//排序数组
+		sortArray(){
+			let res = [];
+			let tree = JSON.parse(JSON.stringify(this.head));
+			while(this.head){
+				let array = [];
+				this.span((node)=>{
+					array.push(node.value);
+					return false;
+				});
+				res.push(this.getMin());
+				this.removeMin();
+				array.shift();
+				this.head = null;
+				if(array.length > 0){
+					this.importArray(array);
+				}
+			}
+			this.head = tree;
+			return res;
+		}
+		//导入数据
+		importArray(array){
+			//this.head = null;
+			for(let i = 0;i<array.length;i++){
+				this.push(array[i]);
+			}
+		}
+	}*/
+	
+	let createArr = function(len){
+		let array = [];
+		let res = [];
+		for(let i=0;i<len;i++){
+		   array[i] = i*1+1;
+		}
+		//return array;
+		while(array.length>0){
+			let eq = parseInt(array.length*Math.random());
+			res.push(array[eq]);
+			array.splice(eq,1);
+		}
+		return res;
+	}
+	
+	let numSort = function(a,b){
+		return a-b;
+	}
+	
+	let Bubbling = function(arr){
+		let sortIndex = arr.length-1;
+		for(let i=0;i<arr.length;i++){
+			let eq = -1;
+			for(let j=0;j<sortIndex;j++){
+				if(arr[j] > arr[j+1]){
+					let medium = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = medium;
+					eq = j;
+				}
+			}
+			if(eq >= 0){
+				sortIndex = eq;
+			}else{
+				break;
+			}
+		}
+		return arr;
+	}
+	
+	let arr1 = createArr(1000);
+	let arr2 = createArr(1000);
+	let arr3 = createArr(1000);
+	
+	//console.log('堆排序前：'+arr1);
+	//console.time("堆排序");
+	//console.log('堆排序后：'+new Heap(arr1).sortArray());
+	//console.timeEnd("堆排序");
+	
+	console.log('快速排序前：'+arr2);
+	console.time("快速排序");
+	console.log('快速排序后：'+arr2.sort(numSort));
+	console.timeEnd("快速排序");
+	
+	console.log('冒泡排序前：'+arr3);
+	console.time("冒泡排序");
+	console.log('冒泡排序后：'+Bubbling(arr3));
+	console.timeEnd("冒泡排序");
+</script>
+</body>
