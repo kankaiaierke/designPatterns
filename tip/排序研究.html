@@ -12,8 +12,8 @@
 <body>
 
 <script type="text/javascript">
-	//废代码
-	/*class Heap {
+	/*已废
+	class Heap {
 		//初始化堆
 		constructor(value){
 			if(value){
@@ -33,6 +33,7 @@
 				//无参数建立一个空树
 				this.head = null;
 			}
+			this.target = null;
 		}
 		//插入一个数字
 		push(value){
@@ -88,15 +89,17 @@
 		//检查堆是否满足条件
 		check(){
 			this.span((node)=>{
-				if(node.left && node.left.value < node.value){
-					let medium = node.value;
-					node.value = node.left.value;
-					node.left.value = medium;
-				}
-				if(node.right && node.right.value < node.value){
-					let medium = node.value;
-					node.value = node.right.value;
-					node.right.value = medium;
+				if(node.value){
+					if(node.left && node.left.value < node.value){
+						let medium = node.value;
+						node.value = node.left.value;
+						node.left.value = medium;
+					}
+					if(node.right && node.right.value < node.value){
+						let medium = node.value;
+						node.value = node.right.value;
+						node.right.value = medium;
+					}
 				}
 				return false;
 			});
@@ -106,6 +109,7 @@
 			let array = [];
 			this.span((node)=>{
 				array.push(node.value);
+				return false;
 			})
 			console.log(array.join(','));
 		}
@@ -115,41 +119,22 @@
 		}
 		//去掉顶部的值
 		removeMin(){
-			let value = this.head.value;
-			let left = this.head.left;
-			let right = this.head.right;
-			let head = null;
+			let array = [];
 			this.span((node)=>{
-				head = node;
+				array.push(node.value);
 				return false;
-			});
-			if(head.value){
-				this.head = {
-					value:head.value,
-					left,
-					right,
-				};
-				head = null;
-			}
-			this.check();
+			})
+			array.shift();
+			this.head = null;
+			this.importArray(array);
 		}
 		//排序数组
 		sortArray(){
 			let res = [];
 			let tree = JSON.parse(JSON.stringify(this.head));
 			while(this.head){
-				let array = [];
-				this.span((node)=>{
-					array.push(node.value);
-					return false;
-				});
 				res.push(this.getMin());
 				this.removeMin();
-				array.shift();
-				this.head = null;
-				if(array.length > 0){
-					this.importArray(array);
-				}
 			}
 			this.head = tree;
 			return res;
@@ -203,14 +188,45 @@
 		return arr;
 	}
 	
-	let arr1 = createArr(1000);
-	let arr2 = createArr(1000);
-	let arr3 = createArr(1000);
+	let Heap = function(arr,index,len){
+		let temp = arr[index];
+		let childIndex = 2*index + 1;
+		while(childIndex < len){
+			if(childIndex + 1 < len && arr[childIndex+1] > arr[childIndex]){
+				childIndex++;
+			}
+			if(temp > arr[childIndex]){
+				break;
+			}
+			arr[index] = arr[childIndex];
+			index = childIndex;
+			childIndex = 2*childIndex + 1;
+		}
+		arr[index] = temp;
+	}
 	
-	//console.log('堆排序前：'+arr1);
-	//console.time("堆排序");
-	//console.log('堆排序后：'+new Heap(arr1).sortArray());
-	//console.timeEnd("堆排序");
+	let heapSort = function(arr){
+		for(let i = arr.length/2;i>=0;i--){
+			Heap(arr,i,arr.length-1);
+		}
+		for(let i=arr.length-1;i>0;i--){
+			let temp = arr[i];
+			arr[i] = arr[0];
+			arr[0] = temp;
+			Heap(arr,0,i);
+		}
+		return arr;
+	}
+	
+	const arrayLen = 1000;
+	let arr1 = createArr(arrayLen);
+	let arr2 = createArr(arrayLen);
+	let arr3 = createArr(arrayLen);
+	
+	console.log('堆排序前：'+arr1);
+	console.time("堆排序");
+	console.log('堆排序后：'+heapSort(arr1));
+	console.timeEnd("堆排序");
 	
 	console.log('快速排序前：'+arr2);
 	console.time("快速排序");
@@ -221,5 +237,6 @@
 	console.time("冒泡排序");
 	console.log('冒泡排序后：'+Bubbling(arr3));
 	console.timeEnd("冒泡排序");
+	
 </script>
 </body>
