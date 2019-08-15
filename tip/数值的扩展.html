@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+
+</head>
+
+<body>
+
+<script type="text/javascript">
+	console.log(Number.isFinite(15));
+	console.log(Number.isFinite(Infinity));
+	console.log(Number.isNaN(NaN));
+	console.log(Number.parseInt('3.14'));
+	console.log(Number.parseFloat('3.14#'));
+	console.log(Number.EPSILON);
+	let equal=(a,b)=>{
+		return Math.abs(a-b)<Number.EPSILON;
+	}
+	console.log(equal(1.4+0.5,1.9));
+	console.log(equal(1.5+0.5,1.9));
+	console.log(Number.MAX_SAFE_INTEGER);
+	console.log(Number.MIN_SAFE_INTEGER);
+	console.log(Math.trunc(4.4));
+	console.log(Math.sign(4.4));
+	console.log(2**10);
+	console.log(Math.log2(1024));
+	console.log(Math.log10(100));
+	console.log(Math.hypot(5,12));
+	console.log(Math.fround(5.12));
+	console.log(Math.imul(5,-12));
+	console.log(Math.clz32(6));
+	console.log(Math.cbrt(27));
+</script>
+</body>
